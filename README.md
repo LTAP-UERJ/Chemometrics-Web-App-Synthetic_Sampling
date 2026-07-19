@@ -2,7 +2,7 @@
 
 ![Status](https://img.shields.io/badge/Status-Active-green)
 ![Version](https://img.shields.io/badge/Release-V2-orange)
-![License](https://img.shields.io/badge/License-Patented-blue)
+![License](https://img.shields.io/badge/License-Proprietary%20%2F%20INPI%20Registered-red.svg)
 ![R](https://img.shields.io/badge/Language-R-blue.svg)
 ![Python](https://img.shields.io/badge/Language-Python-yellow.svg)
 
@@ -108,12 +108,20 @@ The app uses Python v3.13+ via `reticulate`. A compatible Python environment mus
 
 ---
 
-## ⚖️ Legal Notice & Intellectual Property
+## 📜 License & Intellectual Property Protection
 
-> [!IMPORTANT]
-> **Software Registration (INPI):** This software is registered at the Brazilian National Institute of Industrial Property (INPI). All rights are reserved to **LTAP-UERJ**. The registration certificate can be accessed through the [LTAP-UERJ official website](https://sites.google.com/view/ltap-uerj/cwa).
+> [!CAUTION]
+> **All Rights Reserved — Intellectual Property Protection (INPI)**
+> 
+> This software, its source code, interface designs, visual assets, and underlying algorithmic implementations are protected under Intellectual Property laws (Brazilian Software Law No. 9.609/98 and Industrial Property Law No. 9.279/96) and registered at the **National Institute of Industrial Property (INPI)**. 
 
-* **Disclaimer:** LTAP-UERJ is not responsible for any damages resulting from the use of this interface or the interpretation of the generated results. The software is provided "as is", without warranties of any kind.
+### **Terms of Use & Protection Clause:**
+1. **Mandatory Attribution:** Any academic work, study, publication, software integration, or presentation utilizing or referencing this application **must explicitly credit** the original authors (**Paulo Henrique Couto Simões, Julio Cesar Siqueira, Licarion Pinto, Aderval Luna**) and the **Process Analytical Technology Laboratory (LTAP-UERJ)**.
+2. **Prohibition of Unauthorized Reproduction & Redistribution:** Copying, modifying, decompiling, reverse engineering, re-licensing, sub-licensing, mirroring, or redistributing the source code or binary executables without explicit prior written consent from LTAP-UERJ is strictly prohibited.
+3. **Non-Commercial Use Only:** The application may only be used for personal, educational, or non-commercial academic research purposes unless a specific commercial license has been granted by LTAP-UERJ.
+4. **Disclaimer of Liability:** LTAP-UERJ and the developers accept no responsibility or liability for damages, misinterpretation, or loss resulting from the use of this software or its generated datasets. The software is provided "as is", without warranties of any kind.
+
+For licensing inquiries or commercial use permissions, please contact [ltapuerj@gmail.com](mailto:ltapuerj@gmail.com).
 
 ---
 
