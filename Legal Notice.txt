@@ -1,0 +1,12 @@
+⚖️ Propriedade Intelectual e Termos de Uso (Legal Notice)
+Português:
+
+Aviso de Patente: Este software e suas interfaces de usuário associadas são protegidos por patente. A documentação comprobatória da patente encontra-se disponível nos arquivos deste repositório para consulta. Todos os direitos são reservados ao Laboratório de Tecnologia Analítica de Processos (LTAP-UERJ).
+
+Isenção de Responsabilidade: O uso das interfaces e das funcionalidades deste aplicativo é de inteira responsabilidade do usuário. O software é fornecido "no estado em que se encontra" (AS IS), sem garantias de qualquer tipo, expressas ou implícitas, incluindo, mas não se limitando a, garantias de comercialização ou adequação a um propósito específico. Em nenhuma circunstância os autores ou detentores dos direitos autorais serão responsáveis por qualquer reclamação, danos ou outra responsabilidade, seja em ação de contrato, ato ilícito ou de outra forma, decorrente de, fora de ou em conexão com o software ou o uso de suas interfaces.
+
+English:
+
+Patent Notice: This software and its associated user interfaces are protected by patent. The patent documentation is included within the files of this repository. All rights are reserved to the Laboratory of Process Analytical Technology (LTAP-UERJ).
+
+Disclaimer: Use of this application's interfaces and features is at the user's own risk. The software is provided "AS IS", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability or fitness for a particular purpose. In no event shall the authors or copyright holders be liable for any claim, damages, or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software or the use of its interfaces.
