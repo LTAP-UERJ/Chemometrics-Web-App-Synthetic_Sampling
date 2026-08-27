@@ -1,84 +1,130 @@
 # ==============================================================================
-# LTAP Chemometrics Web App (CWA) — Dependency Installer
-# Module: Synthetic Sampling & Imbalance Balancing
-# Laboratorio de Tecnologia e Analise Quimiometrica (LTAP/UERJ)
+# Chemometrics Web App: Synthetic Sampling (CWA: SS)
+# Package & Environment Dependency Installation Script
+# Laboratory of Process Analytical Technology (LTAP/UERJ)
+# Repository: https://github.com/LTAP-UERJ/Chemometrics-Web-App-Synthetic_Sampling
 # ==============================================================================
 
-install_synthetic_sampling_dependencies <- function(force = FALSE, check_only = FALSE, quiet = FALSE) {
-  required_packages <- c(
-    "shiny", "shinydashboard", "shinycssloaders", "shinyWidgets", "shinyBS", "shinyjs",
-    "bslib", "DT", "plotly", "ggplot2", "dplyr", "tidyr", "tibble", "mdatools",
-    "rrcov", "psych", "Rtsne", "vegan", "Hotelling", "MVN", "car", "caret",
-    "ellipse", "imbalance", "MASS", "openxlsx", "philentropy", "purrr",
-    "RColorBrewer", "readxl", "remotes", "reshape2", "reticulate", "rgl",
-    "robustbase", "scutr", "skimr", "SmartEDA", "smotefamily", "UBL", "writexl",
-    "data.table", "digest", "httr", "jsonlite"
-  )
+#' Install and verify all required R and Python dependencies for CWA: SS
+#'
+#' @param install_python Logical; if TRUE, configures reticulate and installs required Python packages.
+#' @param update_packages Logical; if TRUE, updates existing packages to latest CRAN versions.
+#' @param verbose Logical; if TRUE, prints detailed diagnostic messages.
+#' @return A named logical vector indicating installation status of each package.
+#' @export
+install_cwa_synthetic_sampling_packages <- function(install_python = TRUE, 
+                                                   update_packages = FALSE, 
+                                                   verbose = TRUE) {
   
-  if (!quiet) {
-    cat("\n==============================================================================\n")
-    cat("  LTAP Synthetic Sampling — Package Dependency Installer\n")
-    cat(sprintf("  Checking %d required packages...\n", length(required_packages)))
-    cat("==============================================================================\n\n")
-  }
+  cat("\n=======================================================================\n")
+  cat("   Chemometrics Web App: Synthetic Sampling (CWA: SS) Dependency Setup  \n")
+  cat("=======================================================================\n\n")
   
   # Ensure CRAN mirror is set
   if (is.null(getOption("repos")) || getOption("repos")["CRAN"] == "@CRAN@") {
-    options(repos = c(CRAN = "https://cloud.r-project.org/"))
+    options(repos = c(CRAN = "https://cloud.r-project.org"))
   }
   
-  installed_already <- character(0)
-  to_install <- character(0)
+  # --------------------------------------------------------------------------
+  # 1. Comprehensive list of required CRAN packages
+  # --------------------------------------------------------------------------
+  cran_packages <- c(
+    # Core Shiny & Dashboard Infrastructure
+    "shiny", "shinydashboard", "shinyWidgets", "shinyBS", "shinyjs", 
+    "shinycssloaders", "DT", "plotly",
+    
+    # Data Wrangling & Visualization
+    "ggplot2", "RColorBrewer", "reshape2", "tibble", "tidyr", "dplyr", 
+    "purrr", "readxl", "writexl", "openxlsx", "psych", "skimr",
+    
+    # Chemometrics, Statistics & Multivariate Analysis
+    "mdatools", "vegan", "Hotelling", "MASS", "car", "caret", "rgl", 
+    "robustbase", "rrcov", "philentropy", "MVN", "ellipse", "Rtsne",
+    
+    # Synthetic Sampling & Resampling Algorithms
+    "smotefamily", "imbalance", "UBL", "scutr",
+    
+    # Interoperability & Tooling
+    "reticulate", "remotes", "devtools", "RInno"
+  )
   
-  for (pkg in required_packages) {
-    if (requireNamespace(pkg, quietly = TRUE) && !force) {
-      installed_already <- c(installed_already, pkg)
-    } else {
-      to_install <- c(to_install, pkg)
-    }
-  }
+  cat("[1/3] Checking CRAN R package dependencies...\n")
+  installed <- rownames(installed.packages())
+  missing_pkgs <- setdiff(cran_packages, installed)
   
-  if (check_only) {
-    if (!quiet) {
-      cat(sprintf("Status: %d installed, %d missing.\n", length(installed_already), length(to_install)))
-      if (length(to_install) > 0) cat("Missing packages:", paste(to_install, collapse = ", "), "\n")
-    }
-    return(invisible(list(status = if (length(to_install) == 0) "OK" else "MISSING",
-                          installed = installed_already, missing = to_install)))
-  }
-  
-  if (length(to_install) > 0) {
-    if (!quiet) cat("Installing missing packages:", paste(to_install, collapse = ", "), "\n\n")
-    install.packages(to_install, dependencies = TRUE)
+  if (length(missing_pkgs) > 0) {
+    cat(sprintf(" -> Installing %d missing CRAN packages: %s\n", 
+                length(missing_pkgs), paste(missing_pkgs, collapse = ", ")))
+    install.packages(missing_pkgs, dependencies = TRUE)
   } else {
-    if (!quiet) cat("All required packages are already installed!\n")
+    cat(" -> All core CRAN packages are already installed.\n")
   }
   
-  # Verification
-  failed <- character(0)
-  for (pkg in required_packages) {
-    if (!requireNamespace(pkg, quietly = TRUE)) {
-      failed <- c(failed, pkg)
-    }
+  if (update_packages) {
+    cat(" -> Updating existing packages...\n")
+    update.packages(ask = FALSE, checkBuilt = TRUE)
   }
   
-  if (!quiet) {
-    cat("\n------------------------------------------------------------------------------\n")
-    if (length(failed) == 0) {
-      cat("[SUCCESS] All packages for Synthetic Sampling are successfully installed and functional!\n")
-    } else {
-      cat("[WARNING] The following packages could not be installed/loaded:", paste(failed, collapse = ", "), "\n")
-    }
-    cat("------------------------------------------------------------------------------\n\n")
+  # --------------------------------------------------------------------------
+  # 2. Package Verification
+  # --------------------------------------------------------------------------
+  cat("\n[2/3] Verifying package loading...\n")
+  verification_status <- sapply(cran_packages, function(pkg) {
+    available <- requireNamespace(pkg, quietly = TRUE)
+    status_sym <- if (available) "[OK]" else "[FAILED]"
+    if (verbose) cat(sprintf("   %-20s %s\n", pkg, status_sym))
+    return(available)
+  })
+  
+  # --------------------------------------------------------------------------
+  # 3. Python Environment & Machine Learning Libraries (via reticulate)
+  # --------------------------------------------------------------------------
+  if (install_python && verification_status["reticulate"]) {
+    cat("\n[3/3] Configuring Python environment for hybrid ML backend...\n")
+    tryCatch({
+      library(reticulate)
+      
+      # Check if a Python environment is accessible
+      py_avail <- py_available(initialize = TRUE)
+      if (!py_avail) {
+        cat(" -> Initializing default Python virtual environment (r-reticulate)...\n")
+        virtualenv_create("r-reticulate")
+        use_virtualenv("r-reticulate", required = FALSE)
+      }
+      
+      python_packages <- c("numpy", "pandas", "scipy", "scikit-learn", "imbalanced-learn")
+      cat(sprintf(" -> Verifying Python modules: %s\n", paste(python_packages, collapse = ", ")))
+      
+      for (p_mod in python_packages) {
+        if (!py_module_available(p_mod)) {
+          cat(sprintf("    Installing Python module '%s'...\n", p_mod))
+          py_install(p_mod, pip = TRUE)
+        } else {
+          cat(sprintf("    Python module '%s' is ready [OK]\n", p_mod))
+        }
+      }
+    }, error = function(e) {
+      warning(paste("Python environment configuration note:", e$message, 
+                    "\nNote: Native R resampling algorithms (e.g. smotefamily) will remain fully functional."))
+    })
   }
   
-  invisible(list(success = length(failed) == 0, failed = failed))
+  cat("\n=======================================================================\n")
+  all_ok <- all(verification_status)
+  if (all_ok) {
+    cat(" SUCCESS: All CWA: SS dependencies are successfully installed and ready! \n")
+    cat(" You can launch the application by running: shiny::runApp()\n")
+  } else {
+    failed_pkgs <- names(verification_status)[!verification_status]
+    cat(sprintf(" WARNING: The following packages could not be loaded: %s\n", 
+                paste(failed_pkgs, collapse = ", ")))
+  }
+  cat("=======================================================================\n\n")
+  
+  invisible(verification_status)
 }
 
-# Generic alias
-install_dependencies <- install_synthetic_sampling_dependencies
-
-# Auto-run if executed non-interactively
+# Automatically run dependency installation if script is executed directly
 if (!interactive()) {
-  install_synthetic_sampling_dependencies()
+  install_cwa_synthetic_sampling_packages()
 }
