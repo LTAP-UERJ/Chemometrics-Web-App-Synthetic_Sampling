@@ -26,7 +26,7 @@ install_cwa_synthetic_sampling_packages <- function(install_python = TRUE,
   }
   
   # --------------------------------------------------------------------------
-  # 1. Comprehensive list of required CRAN packages
+  # 1. Comprehensive list of required CRAN packages for CWA: SS runtime
   # --------------------------------------------------------------------------
   cran_packages <- c(
     # Core Shiny & Dashboard Infrastructure
@@ -44,8 +44,8 @@ install_cwa_synthetic_sampling_packages <- function(install_python = TRUE,
     # Synthetic Sampling & Resampling Algorithms
     "smotefamily", "imbalance", "UBL", "scutr",
     
-    # Interoperability & Tooling
-    "reticulate", "remotes", "devtools", "RInno"
+    # Interoperability & Deployment
+    "reticulate", "remotes", "RInno"
   )
   
   cat("[1/3] Checking CRAN R package dependencies...\n")
@@ -82,7 +82,7 @@ install_cwa_synthetic_sampling_packages <- function(install_python = TRUE,
   if (install_python && verification_status["reticulate"]) {
     cat("\n[3/3] Configuring Python environment for hybrid ML backend...\n")
     tryCatch({
-      library(reticulate)
+      suppressPackageStartupMessages(library(reticulate))
       
       # Check if a Python environment is accessible
       py_avail <- py_available(initialize = TRUE)
@@ -92,15 +92,25 @@ install_cwa_synthetic_sampling_packages <- function(install_python = TRUE,
         use_virtualenv("r-reticulate", required = FALSE)
       }
       
-      python_packages <- c("numpy", "pandas", "scipy", "scikit-learn", "imbalanced-learn")
-      cat(sprintf(" -> Verifying Python modules: %s\n", paste(python_packages, collapse = ", ")))
+      # Python module import names mapped to their respective pip package names
+      python_modules <- list(
+        numpy            = "numpy",
+        pandas           = "pandas",
+        scipy            = "scipy",
+        sklearn          = "scikit-learn",
+        imblearn         = "imbalanced-learn"
+      )
       
-      for (p_mod in python_packages) {
-        if (!py_module_available(p_mod)) {
-          cat(sprintf("    Installing Python module '%s'...\n", p_mod))
-          py_install(p_mod, pip = TRUE)
+      cat(sprintf(" -> Verifying Python modules (%s)...\n", 
+                  paste(unname(unlist(python_modules)), collapse = ", ")))
+      
+      for (mod_import in names(python_modules)) {
+        pip_pkg <- python_modules[[mod_import]]
+        if (!py_module_available(mod_import)) {
+          cat(sprintf("    Installing Python package '%s' (module: %s)...\n", pip_pkg, mod_import))
+          py_install(pip_pkg, pip = TRUE)
         } else {
-          cat(sprintf("    Python module '%s' is ready [OK]\n", p_mod))
+          cat(sprintf("    Python package '%s' (module: %s) is ready [OK]\n", pip_pkg, mod_import))
         }
       }
     }, error = function(e) {
@@ -124,7 +134,5 @@ install_cwa_synthetic_sampling_packages <- function(install_python = TRUE,
   invisible(verification_status)
 }
 
-# Automatically run dependency installation if script is executed directly
-if (!interactive()) {
-  install_cwa_synthetic_sampling_packages()
-}
+# Execute automatic dependency installation immediately upon running/sourcing
+install_cwa_synthetic_sampling_packages()
