@@ -43,7 +43,7 @@ library(dplyr) #ACRÉSCIMO EM 04/04/2025 PARA MÉDIAS DO PLOT COMPARATIVO
 
 library(RInno)
 library(remotes)
-library(devtools)
+#library(devtools)
 
 #####ACRÉSCIMO DE PACOTE EM 10/07/2025 PARA RODAR MÉTODO SBC
 #"Pacote bimba — RomeroBarata/bimba"
