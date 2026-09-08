@@ -1,22 +1,20 @@
 # Chemometrics Web App — Synthetic Sampling (CWA: SS)
 
 ![Status](https://img.shields.io/badge/Status-Active-green)
-![Release](https://img.shields.io/badge/Release-V1%20%26%20V2-orange)
+![Version](https://img.shields.io/badge/Release-v1.0-orange)
 ![License](https://img.shields.io/badge/License-Proprietary%20%2F%20INPI%20Registered-red.svg)
 ![R](https://img.shields.io/badge/R%20Version-4.3.0%2B-blue.svg)
 ![Python](https://img.shields.io/badge/Python-v3.10%2B-yellow.svg)
 ![Platform](https://img.shields.io/badge/Deployment-ShinyApps%20%7C%20RStudio%20%7C%20Desktop%20EXE-blueviolet)
 
-Developed by the **[Process Analytical Technology Laboratory (LTAP-UERJ)](https://www.ltapuerj.com.br/)**, the **Chemometrics Web App: Synthetic Sampling (CWA: SS)** is an advanced computational platform designed to resolve severe class-imbalance problems in high-dimensional analytical, spectroscopic, chromatographic, and machine learning datasets. The system integrates classical resampling, modern border-focused heuristics, clustering-based undersampling, hybrid algorithms, multivariate chemometric diagnostics, and automated reporting.
+Developed by the **[Process Analytical Technology Laboratory (LTAP-UERJ)](https://www.ltapuerj.com.br/)**, the **Chemometrics Web App: Synthetic Sampling (CWA: SS)** is a specialized computational platform designed to address and solve severe class-imbalance problems in chemometrics, spectroscopy, chromatography, and analytical machine learning. The system provides an end-to-end pipeline covering data import, spectral/numerical preprocessing, multiple oversampling, undersampling, and hybrid algorithms, followed by chemometric multivariate diagnostic verification and export.
 
 ---
 
 ## 🔗 Quick Links
 
-* 🌐 **Online Web Application (Shinyapps.io):**
-  * **[Launch Version 02 (Full Production & QC Diagnostics)](https://ltap.shinyapps.io/Synthetic_Sampling/)**
-  * **[Launch Version 01 (Lightweight Core Resampling)](https://ltap.shinyapps.io/Synthetic_Sampling_V1/)**
-* 🖥️ **Desktop Executable Download (.exe):** [LTAP CWA Standalone Executables (Google Drive)](https://drive.google.com/drive/folders/1l8dB4BGKVjqPMrvA5ZCLvafRNtTOCFew?usp=drive_link)
+* 🌐 **Online Web Application (Shinyapps.io):** [Access CWA: Synthetic Sampling](https://ltap.shinyapps.io/Synthetic_Sampling/)
+* 🖥️ **Desktop Executable Download (.exe):** [Download Windows Standalone Installer (Google Drive)](https://drive.google.com/drive/folders/1oeVCeKzjskS-HWGx7GWG4lyT3QvViLgF?usp=drive_link)
 * 📦 **Automated Dependency Setup Scripts:**
   * [`install_dependencies.R`](https://github.com/LTAP-UERJ/Chemometrics-Web-App-Synthetic_Sampling/blob/main/install_dependencies.R)
   * [`install_packages.R`](https://github.com/LTAP-UERJ/Chemometrics-Web-App-Synthetic_Sampling/blob/main/install_packages.R)
@@ -40,27 +38,76 @@ This module was conceived and engineered by the chemometrics and data science te
 
 ---
 
-## 🆕 Version Comparison & Change Log
+## ✨ Features Available for Use in this Version
 
-The CWA Synthetic Sampling ecosystem is maintained in two distinct releases tailored to different research and operational requirements:
+The platform integrates a complete, standalone chemometrics resampling and diagnostic workflow:
 
-| Dimension | Version 01 (V1 — Lightweight Baseline) | Version 02 (V2 — Full Production Platform) |
+```
+┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
+│                            CWA: SYNTHETIC SAMPLING PIPELINE                                      │
+├───────────────────┬───────────────────┬───────────────────┬───────────────────┬──────────────────┤
+│  1. Data Import   │ 2. Pre-processing │ 3. Resampling     │ 4. Multivariate   │ 5. Export &      │
+│     & Demo Data   │    & Scaling      │    Algorithms     │    Diagnostics    │    Reporting     │
+├───────────────────┼───────────────────┼───────────────────┼───────────────────┼──────────────────┤
+│ • Excel/CSV/TXT   │ • Auto-scaling    │ • Oversampling    │ • PCA (2D & 3D)   │ • Balanced Data  │
+│ • Transposition   │ • Mean/Median Ctr │ • Undersampling   │ • Robust PCA MCD  │   (CSV, Excel)   │
+│ • In-line Demos:  │ • Range Scaling   │ • Hybrid Methods  │ • t-SNE Manifold  │ • Synthetic Only │
+│   QSAR & Prestige │ • Box-Cox / Y-J   │ • SBC Clustering  │ • Hotelling's T²  │ • Models & Plots │
+└───────────────────┴───────────────────┴───────────────────┴───────────────────┴──────────────────┘
+```
+
+### 📥 1. Flexible Data Import & Built-in Demo Datasets
+* **Broad File Support:** Reads Microsoft Excel (`.xlsx`, `.xls`), CSV, TXT, and R workspace (`.RData`) files.
+* **Transposition Flexibility:** Automatically transposes matrices when samples are arranged in columns rather than rows.
+* **Interactive Class Definition:** Automatically detects or allows user selection of categorical target class columns.
+* **Zero-File In-App Demos:** Instantly loadable without external files:
+  * **QSAR Biodegradation Demo:** 779 chemical samples $\times$ 11 molecular descriptors across 2 classes (Ready vs. Not ready biodegradable).
+  * **Prestige Demo:** 102 samples $\times$ 5 socioeconomic variables across 4 classes (`bc`, `NB`, `prof`, `wc`).
+
+### ⚙️ 2. Spectral & Numerical Pre-processing
+* **Centering & Scaling:** Mean Centering, Median Centering, Auto-scaling / Unit Variance (UV), Range Scaling (0 to 1).
+* **Power Transformations:** Box-Cox and Yeo-Johnson transformations to induce normality and stabilize variance.
+* **Missing Value Exploration:** Interactive diagnostic position mapping for missing data.
+
+### ⬆️ 3. Oversampling (Upsampling) Methods
+| Algorithm | Mechanism | Practical Chemometrics Application |
 | :--- | :--- | :--- |
-| **Primary Focus** | Fast, lightweight resampling & core data exploration | Advanced hybrid resampling, QC diagnostics & reporting |
-| **Execution Architecture** | **100% Self-contained single-file (`app.R`)** or multi-file | Modular multi-layer platform with automated report engine |
-| **Oversampling** | SMOTE, SMOTE-NC, Borderline-SMOTE, SVM-SMOTE, ADASYN, Random Over | Full V1 suite + SMOTE-IPF + SPIDER |
-| **Undersampling** | Tomek Links, NearMiss (v1-v3), ENN, OSS, Random Under, SBC (scutr) | Full V1 suite + multi-metric distance clustering |
-| **Hybrid Resampling** | SMOTE-Tomek Links, SMOTE-ENN | SMOTE-TL, SMOTE-ENN, SMOTE-IPF, SPIDER |
-| **Quality Control & Diagnostics** | Standard PCA, Robust PCA, 2D/3D Score/Loading plots, t-SNE | Full V1 QC + PERMANOVA (`adonis2`), Hotelling's $T^2$, KS tests, Jensen-Shannon |
-| **Sample Datasets** | In-line QSAR Biodegradation (779 samples) & Prestige (102 samples) | In-line demo datasets + external session import (`.RData`) |
-| **Report Generation** | Export tables & charts directly (CSV, Excel, PNG) | Multi-language automated report builder (PDF, HTML, Word in 7 languages) |
-| **Target Users** | Individual researchers, students, quick RStudio single-file runs | Research labs, validation pipelines, full regulatory compliance |
+| **SMOTE** | Generates synthetic instances by linear interpolation along minority $k$-nearest neighbor segments. | Fundamental spectral / chromatographic sample balancing. |
+| **SMOTE-NC** | Extends SMOTE to handle mixed continuous numerical and categorical attributes. | Combined chemical datasets (continuous spectra + discrete origin/batch labels). |
+| **Borderline-SMOTE** | Restricts synthetic sample generation strictly to borderline minority samples (DANGER zone). | Sharp classification boundaries with overlapping chemical classes. |
+| **SVM-SMOTE** | Uses Support Vector Machine boundary support vectors to guide synthesis. | High-dimensional, sparse spectroscopic feature spaces. |
+| **ADASYN** | Adaptively synthesizes more instances for harder-to-learn minority samples according to local density. | Heterogeneous analytical clusters with non-uniform dispersion. |
+| **Random Over** | Replicates existing minority samples with replacement. | Baseline comparison and ultra-small sample subsets. |
+
+### ⬇️ 4. Undersampling (Downsampling) Methods
+| Algorithm | Mechanism | Practical Chemometrics Application |
+| :--- | :--- | :--- |
+| **Tomek Links** | Identifies and purges majority instances that form mutually closest opposite-class pairs. | Cleaning boundary ambiguity and removing mislabeled borderline samples. |
+| **NearMiss (v1–v3)** | Selects majority samples based on distance to closest minority instances (average or minimum). | Controlled, distance-aware reduction of dominant background classes. |
+| **ENN** | Removes instances whose label disagrees with the majority vote of their $k$-nearest neighbors. | Noise filtering and outlier trimming in large spectral libraries. |
+| **OSS** | Couples Tomek Links boundary cleaning with Condensed Nearest Neighbor (CNN) reduction. | Aggressive dataset condensation while preserving critical decision edges. |
+| **SBC (scutr)** | Partitions majority class via $k$-means clustering and replaces dense regions with representatives. | Preserving multivariate cluster topology while balancing sample sizes. |
+| **Random Under** | Randomly removes majority instances down to the desired balance ratio. | Quick computational reduction for preliminary exploratory screening. |
+
+### 🔀 5. Hybrid Resampling Pipelines
+* **SMOTE-Tomek Links (SMOTE-TL):** Overcomes oversampling blur by synthesizing with SMOTE and subsequently stripping ambiguous border points via Tomek Links.
+* **SMOTE-ENN:** Pairs SMOTE oversampling with Edited Nearest Neighbours to aggressively prune noisy synthetic instances.
+
+### 📊 6. Chemometric Quality Control & Diagnostic Visualizations
+* **Comparative PCA:** Interactive Score plots (2D and 3D with 95% and 99% confidence ellipses), Loading plots, BiPlots, and Explained Variance scree plots.
+* **Robust PCA (ROBPCA via `rrcov`):** Score Distance (SD) vs. Orthogonal Distance (OD) diagnostic plots using Minimum Covariance Determinant (MCD) to ensure synthetic samples do not introduce artificial leverage points.
+* **t-SNE Manifold Projections:** Non-linear dimensionality reduction verifying that synthetic samples populate genuine manifold structures rather than artificial disconnected clusters.
+* **Multivariate Statistical Tests:** Hotelling's $T^2$ centroid preservation test, Generalized Procrustes Analysis (`vegan`), Henze-Zirkler multivariate normality (`MVN`), and distance divergence metrics (`philentropy`).
+
+### 💾 7. Flexible Data Export
+* Direct export of the complete balanced dataset or synthetic-only instances to Microsoft Excel (`.xlsx`), CSV, and CSV2 (European semicolon/comma format).
+* One-click download of PCA/t-SNE scores, loadings, and statistical summary matrices.
 
 ---
 
 ## 💻 Access & Execution Guide
 
-You can access and run the Synthetic Sampling platform through **three different modalities**:
+You can access and run the platform using **any of the three modalities** below:
 
 ```
                               ┌──────────────────────────────────────────────┐
@@ -72,32 +119,32 @@ You can access and run the Synthetic Sampling platform through **three different
          ▼                                           ▼                                          ▼
 ┌─────────────────────────┐             ┌─────────────────────────┐            ┌─────────────────────────┐
 │  1. RStudio / Local R   │             │   2. Desktop EXE Bundle │            │  3. ShinyApps.io Cloud  │
-│  • Full code control    │             │   • 100% Offline (.exe) │            │  • Instant Web Access   │
-│  • V1 Single-File App   │             │   • Embedded R & Python │            │  • Zero Installation    │
-│  • V2 Full Production   │             │   • One-click launch    │            │  • Any Browser/Device   │
+│  • Full source control  │             │   • 100% Offline (.exe) │            │  • Instant Web Access   │
+│  • Single-file app.R    │             │   • Embedded R & Python │            │  • Zero Installation    │
+│  • Auto-dependency setup│             │   • One-click desktop   │            │  • Any Browser / Device │
 └─────────────────────────┘             └─────────────────────────┘            └─────────────────────────┘
 ```
 
 ---
 
-### Option 1: Running in RStudio (Source Code — V1 & V2)
+### Option 1: Running in RStudio (Source Code)
 
-Running directly in RStudio provides full flexibility for researchers who wish to inspect data reactively, customize parameters, or run the application locally on their workstations.
+Running the source code locally in RStudio provides full transparency, customization, and local computation speed.
 
 #### Step 1: Clone or Download the Repository
-Clone the repository using Git or download the ZIP archive:
+Clone the repository using Git or download the repository ZIP file:
 ```bash
 git clone https://github.com/LTAP-UERJ/Chemometrics-Web-App-Synthetic_Sampling.git
 cd Chemometrics-Web-App-Synthetic_Sampling
 ```
 
 #### Step 2: Automated Environment & Dependency Installation
-We provide two equivalent convenience scripts—[`install_dependencies.R`](https://github.com/LTAP-UERJ/Chemometrics-Web-App-Synthetic_Sampling/blob/main/install_dependencies.R) and [`install_packages.R`](https://github.com/LTAP-UERJ/Chemometrics-Web-App-Synthetic_Sampling/blob/main/install_packages.R)—that automate the entire setup.
+We provide two convenience scripts—[`install_dependencies.R`](https://github.com/LTAP-UERJ/Chemometrics-Web-App-Synthetic_Sampling/blob/main/install_dependencies.R) and [`install_packages.R`](https://github.com/LTAP-UERJ/Chemometrics-Web-App-Synthetic_Sampling/blob/main/install_packages.R)—that automatically install and configure everything.
 
 Open RStudio and run **either** command in the R Console:
 
 ```r
-# Execute local installation script
+# Execute local installation script:
 source("install_dependencies.R")
 
 # Alternatively, the alias script can be used:
@@ -105,127 +152,71 @@ source("install_packages.R")
 ```
 
 > [!TIP]
-> **One-Liner Remote Installation (No Download Required):**
-> You can also run the installer directly from GitHub without cloning the repo first:
+> **Direct One-Liner (No Prior Download Required):**
+> You can also run the installer directly from GitHub in your RStudio Console:
 > ```r
 > source("https://raw.githubusercontent.com/LTAP-UERJ/Chemometrics-Web-App-Synthetic_Sampling/main/install_dependencies.R")
 > ```
 
-**What this script configures automatically:**
-1. **CRAN Packages:** Identifies and installs all missing R dependencies (`shiny`, `shinydashboard`, `shinyWidgets`, `shinyBS`, `shinyjs`, `shinycssloaders`, `DT`, `plotly`, `ggplot2`, `readxl`, `writexl`, `openxlsx`, `mdatools`, `vegan`, `Hotelling`, `MASS`, `car`, `caret`, `rgl`, `robustbase`, `rrcov`, `philentropy`, `MVN`, `ellipse`, `Rtsne`, `smotefamily`, `imbalance`, `UBL`, `scutr`, `reticulate`, etc.).
-2. **Verification Diagnostics:** Validates that each required package loads cleanly and reports a verification table (`[OK]` / `[FAILED]`).
-3. **Python & Hybrid ML Engine:** Automatically detects or provisions an isolated `r-reticulate` virtual environment and installs the required Python packages (`scikit-learn`, `imbalanced-learn`, `numpy`, `pandas`, `scipy`).
-4. **Fallback Safety:** If Python is not installed on the system, the installer logs a diagnostic note; **all native R resampling algorithms (e.g., SMOTE, SMOTE-NC, ADASYN, Random Upsampling, SBC) will remain 100% operational**.
+**What the installer does automatically:**
+1. **CRAN Packages:** Installs and checks all required R packages (`shiny`, `shinydashboard`, `shinyWidgets`, `shinyBS`, `shinyjs`, `shinycssloaders`, `DT`, `plotly`, `ggplot2`, `readxl`, `writexl`, `openxlsx`, `mdatools`, `vegan`, `Hotelling`, `MASS`, `car`, `caret`, `rgl`, `robustbase`, `rrcov`, `philentropy`, `MVN`, `ellipse`, `Rtsne`, `smotefamily`, `imbalance`, `UBL`, `scutr`, `reticulate`, etc.).
+2. **Loading Verification:** Verifies that every package loads correctly and outputs an informative checklist with `[OK]` status.
+3. **Python & Hybrid ML Configuration:** Detects or provisions an isolated `r-reticulate` virtual environment and installs required Python packages (`scikit-learn`, `imbalanced-learn`, `numpy`, `pandas`, `scipy`).
+4. **Fallback Safety:** If Python is not installed on the user machine, the installer logs a diagnostic note; **all native R resampling algorithms (SMOTE, SMOTE-NC, ADASYN, Random Upsampling, SBC) remain 100% operational**.
 
-#### Step 3: Launching the Application
-Once dependencies are verified, you can launch the app using either of the following approaches:
-
+#### Step 3: Launching the Application in RStudio
 * **Method A (Interactive GUI — Recommended):**
   1. Open `app.R` in RStudio.
-  2. Notice the green **"Run App"** button at the top-right of the source editor pane.
+  2. Notice the green **"Run App"** button at the top-right corner of the script editor.
   3. Click **"Run App"** (or press `Ctrl + Shift + Enter`).
-  
 * **Method B (Console Command):**
   ```r
-  # From within the project directory:
+  # In the project working directory:
   shiny::runApp()
   
-  # Or pointing directly to the file path:
-  shiny::runApp("path/to/app.R")
+  # Or specifying the file path directly:
+  shiny::runApp("app.R")
   ```
 
----
-
-#### 🌟 Special Standalone Mode: Version 01 (`app.R` Single-File)
-For users who require zero directory overhead, **Version 01** can run as a **completely self-contained single file**:
-* **Zero Folder Dependencies:** No external `www/`, `report_template.Rmd`, or database files are required.
-* **Inline Datasets:** Both the QSAR Biodegradation (779 samples $\times$ 11 features) and Prestige (102 samples $\times$ 5 features) demo datasets are compiled directly into the code.
-* **Built-in Auto-Installer:** The top of the V1 `app.R` script contains an automated startup check that installs missing CRAN packages on first execution.
-* **How to use:** Simply download or copy `app.R` into any folder (e.g., your `Downloads` directory), open it in RStudio, and hit **Run App**!
+> [!NOTE]
+> **Single-File Self-Contained Execution:**
+> The `app.R` file is engineered to be **100% standalone**. If someone has only this single file, opening it in RStudio and clicking **"Run App"** automatically detects missing CRAN packages, loads inline demo datasets, and runs seamlessly without requiring any external folders or assets.
 
 ---
 
 ### Option 2: Desktop Standalone Executable (.exe — Offline Windows)
 
-For production laboratories, industrial quality control units, or computers restricted from internet access or external package compilation, we provide pre-compiled Windows installers.
+For analytical laboratories, production environments, or institutional computers without administrative package compilation access or internet connectivity:
 
-* **Key Advantages:**
-  * **100% Offline:** Operates entirely without an internet connection.
-  * **Embedded Runtime:** Ships with its own isolated, hardened R-Portable and Python-Portable environments—no installation of R, RStudio, or Python is needed on the client computer.
-  * **System Integrity:** Does not interfere with existing system PATH variables or local Python/R installations.
+* **Key Benefits:**
+  * **100% Offline:** Runs completely disconnected from the internet.
+  * **Zero Setup:** Ships with pre-configured R-Portable and Python-Portable runtimes embedded inside the installer. No local R, RStudio, or Python installation is required.
+  * **Safe & Isolated:** Will not modify or conflict with existing Python/R versions on the machine.
 
-* **Installation Steps:**
-  1. Navigate to the **[LTAP CWA Executables Folder on Google Drive](https://drive.google.com/drive/folders/1l8dB4BGKVjqPMrvA5ZCLvafRNtTOCFew?usp=drive_link)**.
-  2. Download the installer:
-     * `setup_Synthetic_Sampling.exe` (for Version 02)
-     * `setup_Synthetic_Sampling_V1.exe` (for Version 01)
-  3. Run the installer wizard and choose the installation destination (default: `C:\LTAP_Modules\`).
-  4. Launch the application directly from the **Desktop Shortcut** or **Windows Start Menu**.
+* **Download & Installation Instructions:**
+  1. Open the Google Drive download directory:
+     🔗 **[Download CWA: Synthetic Sampling Executable (Google Drive)](https://drive.google.com/drive/folders/1oeVCeKzjskS-HWGx7GWG4lyT3QvViLgF?usp=drive_link)**
+  2. Download the installer: `setup_Synthetic_Sampling.exe`.
+  3. Run the installer wizard (installs by default to `C:\LTAP_Modules\`).
+  4. Launch the application anytime using the **Desktop Shortcut** or **Windows Start Menu**.
 
 ---
 
 ### Option 3: Online Web Application (Shinyapps.io — Cloud Deployment)
 
-For fast evaluations, client demonstrations, or cross-platform use (including macOS, Linux, ChromeOS, iPad, and Android tablets), the application is hosted on high-availability cloud servers.
+For immediate access, student classes, quick file evaluations, or running on non-Windows operating systems (macOS, Linux, Chromebooks, iPad, Android tablets):
 
-* **Version 02 (Production Platform):**
+* **Cloud Web App URL:**
   🔗 **[https://ltap.shinyapps.io/Synthetic_Sampling/](https://ltap.shinyapps.io/Synthetic_Sampling/)**
-* **Version 01 (Core Resampling Suite):**
-  🔗 **[https://ltap.shinyapps.io/Synthetic_Sampling_V1/](https://ltap.shinyapps.io/Synthetic_Sampling_V1/)**
 
 * **Highlights:**
-  * Zero local installation or hardware requirements.
-  * Instant access from any modern browser (Chrome, Firefox, Safari, Edge).
-  * Data confidentiality: Uploaded sessions reside solely in volatile container memory and are erased upon session close.
+  * Zero local installation or technical setup required.
+  * Runs directly inside any modern web browser (Google Chrome, Mozilla Firefox, Microsoft Edge, Apple Safari).
+  * Data privacy: Uploaded data resides strictly in volatile container RAM and is automatically purged upon closing the session.
 
 ---
 
-## 🚀 Key Methodological Features
-
-### 📥 1. Data Import & Interactive Preprocessing
-* Accepts `.xlsx`, `.xls`, `.csv`, `.txt` formats with customizable delimiters, decimal separators, and header rows.
-* Supports transposed matrix inputs (samples structured in columns).
-* Normalization and scaling: Auto-scaling (UV), Mean Centering, Median Centering, Range Scaling (0–1), and Power transformations.
-* Dynamic sample/variable removal and zero-variance feature filtering.
-
-### ⬆️ 2. Oversampling (Upsampling) Algorithms
-| Algorithm | Mechanism | Practical Chemometrics Application |
-| :--- | :--- | :--- |
-| **SMOTE** | Generates synthetic instances along the line segments connecting $k$-nearest minority neighbors. | Standard spectral / compositional imbalance balancing. |
-| **SMOTE-NC** | Extends SMOTE to handle mixed continuous and nominal/categorical attributes. | Combined chemical parameters (spectral bands + batch / origin categories). |
-| **Borderline-SMOTE** | Identifies minority instances near the decision boundary (DANGER zone) and restricts synthesis to them. | Differentiating closely overlapping chemical classes or adulterant boundaries. |
-| **SVM-SMOTE** | Uses Support Vector Machine support vectors to model class boundaries and generate border samples. | Non-linear spectroscopic boundaries and sparse high-dimensional datasets. |
-| **ADASYN** | Adaptively calculates density distribution and synthesizes more instances for harder-to-learn samples. | Highly heterogeneous sample clusters with non-uniform dispersion. |
-| **Random Over** | Duplicates randomly sampled minority instances with optional jittering. | Baseline comparison and ultra-small sample subsets. |
-
-### ⬇️ 3. Undersampling (Downsampling) Algorithms
-| Algorithm | Mechanism | Practical Chemometrics Application |
-| :--- | :--- | :--- |
-| **Tomek Links** | Detects and removes majority instances that form mutually closest opposite-class pairs. | Boundary sharpening and elimination of mislabeled or borderline samples. |
-| **NearMiss (v1–v3)** | Selects majority samples based on average or minimum distance to closest minority instances. | Controlled reduction of dominant background classes. |
-| **ENN** | Removes instances whose classification disagrees with the majority vote of their $k$-nearest neighbors. | Noise reduction and outlier cleaning in raw spectral libraries. |
-| **OSS** | Applies Tomek Links followed by Condensed Nearest Neighbor (CNN) filtering. | Aggressive dataset condensation while preserving critical decision edges. |
-| **SBC (scutr)** | Clusters the majority class via $k$-means and samples cluster representatives. | Preserving multivariate cluster topology while reducing sample volume. |
-| **Random Under** | Randomly eliminates majority instances to achieve target class balance. | Rapid prototype balancing and computational workload reduction. |
-
-### 🔀 4. Hybrid Resampling Pipelines
-* **SMOTE-Tomek Links (SMOTE-TL):** Overcomes oversampling blur by synthesizing with SMOTE and subsequently stripping ambiguous border points via Tomek Links.
-* **SMOTE-ENN:** Pairs SMOTE oversampling with Edited Nearest Neighbours to aggressively prune noisy synthetic instances.
-* **SMOTE-IPF (V2):** Iterative Partitioning Filter that trains an ensemble to identify and eliminate mislabeled synthetic samples.
-* **SPIDER (V2):** Classifies instances into safe, borderline, and noisy subsets before executing combined resampling.
-
-### 📊 5. Diagnostic & Quality Control (QC) Suite
-* **Comparative PCA:** Interactive Score plots, Loading plots, BiPlots, and Explained Variance curves comparing Original vs. Resampled spaces.
-* **Robust PCA (ROBPCA):** Score Distance (SD) vs. Orthogonal Distance (OD) diagnostic plots using Minimum Covariance Determinant (MCD) to verify outlier integrity.
-* **t-SNE Projections:** 2D and 3D non-linear manifold embeddings to detect artificial sub-clustering or manifold collapse.
-* **Multivariate Hypothesis Tests:**
-  * **PERMANOVA (`adonis2`):** Non-parametric multivariate analysis of variance evaluating whether synthetic generation altered class centroids ($p > 0.05$ desired).
-  * **Hotelling's $T^2$ Centroid Preservation:** Verifies that synthetic centroids do not diverge from empirical sample means.
-  * **Kolmogorov-Smirnov & Jensen-Shannon Tests:** Univariate and distribution-wide divergence metrics.
-
----
-
-## 🛠️ Technical Stack & Dependencies
+## 🛠️ Technical Stack & Architecture
 
 ```plaintext
 ┌────────────────────────────────────────────────────────────────────────────┐
